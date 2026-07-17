@@ -1,0 +1,21 @@
+#!/usr/bin/bash
+#  PRINTER=test-hex.txt
+# PRINTER="/dev/usb/lp0"
+PRINTER=/dev/ttyACM0
+EOL="\r\n"
+cps=10
+
+# [ -c ${PRINTER} ]|| ( echo "Default ${PRINTER} does not exist"; PRINTER=/dev/null )
+
+echo -n > ${PRINTER}
+# while IFS= read -r line; do
+while IFS= read -r line; do
+    echo -e "$line" > ${PRINTER}
+    len=${#line}
+#     st=$(echo "scale=0;(1.4*$len/$cps)" | bc) # panasonic RKT55: CPS=10
+    st=$(echo "scale=0;($len/$cps)" | bc) # IBM WW1000: CPS=20
+    [ ${st} -gt 0 ]&& sleep ${st}
+# it is good idea at the end of each line to reset the control codes
+# so they are not carried forward to the next line
+done
+
