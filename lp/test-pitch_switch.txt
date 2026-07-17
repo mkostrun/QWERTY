@@ -1,0 +1,57 @@
+\x1ba0
+\x1bP  1 Pitch 10: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bM  1 Pitch 12: Quick Brown Fox Jumps Over The Lazy Dog [INSTALLED]
+\x1bo  1 Pitch 15: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bp  1 Pitch PS: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bP  2 Pitch 10: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bM  2 Pitch 12: Quick Brown Fox Jumps Over The Lazy Dog [INSTALLED]
+\x1bo  2 Pitch 15: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bp  2 Pitch PS: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bP  3 Pitch 10: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bM  3 Pitch 12: Quick Brown Fox Jumps Over The Lazy Dog [INSTALLED]
+\x1bo  3 Pitch 15: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bp  3 Pitch PS: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bP  4 Pitch 10: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bM  4 Pitch 12: Quick Brown Fox Jumps Over The Lazy Dog [INSTALLED]
+\x1bo  4 Pitch 15: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bp  4 Pitch PS: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bP  5 Pitch 10: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bM  5 Pitch 12: Quick Brown Fox Jumps Over The Lazy Dog [INSTALLED]
+\x1bo  5 Pitch 15: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bp  5 Pitch PS: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bP  6 Pitch 10: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bM  6 Pitch 12: Quick Brown Fox Jumps Over The Lazy Dog [INSTALLED]
+\x1bo  6 Pitch 15: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bp  6 Pitch PS: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bP  7 Pitch 10: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bM  7 Pitch 12: Quick Brown Fox Jumps Over The Lazy Dog [INSTALLED]
+\x1bo  7 Pitch 15: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bp  7 Pitch PS: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bP  8 Pitch 10: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bM  8 Pitch 12: Quick Brown Fox Jumps Over The Lazy Dog [INSTALLED]
+\x1bo  8 Pitch 15: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bp  8 Pitch PS: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bP  9 Pitch 10: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bM  9 Pitch 12: Quick Brown Fox Jumps Over The Lazy Dog [INSTALLED]
+\x1bo  9 Pitch 15: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bp  9 Pitch PS: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bP 10 Pitch 10: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bM 10 Pitch 12: Quick Brown Fox Jumps Over The Lazy Dog [INSTALLED]
+\x1bo 10 Pitch 15: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bp 10 Pitch PS: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bP 11 Pitch 10: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bM 11 Pitch 12: Quick Brown Fox Jumps Over The Lazy Dog [INSTALLED]
+\x1bo 11 Pitch 15: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bp 11 Pitch PS: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bP 12 Pitch 10: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bM 12 Pitch 12: Quick Brown Fox Jumps Over The Lazy Dog [INSTALLED]
+\x1bo 12 Pitch 15: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bp 12 Pitch PS: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bP 13 Pitch 10: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bM 13 Pitch 12: Quick Brown Fox Jumps Over The Lazy Dog [INSTALLED]
+\x1bo 13 Pitch 15: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bp 13 Pitch PS: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bP 14 Pitch 10: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bM 14 Pitch 12: Quick Brown Fox Jumps Over The Lazy Dog [INSTALLED]
+\x1bo 14 Pitch 15: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bp 14 Pitch PS: Quick Brown Fox Jumps Over The Lazy Dog

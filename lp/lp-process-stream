@@ -1,0 +1,26 @@
+#!/usr/bin/bash
+#  PRINTER=test-hex.txt
+# PRINTER="/dev/usb/lp0"
+PRINTER=/dev/ttyACM0
+EOL="\r\n"
+
+# [ -c ${PRINTER} ]|| ( echo "Default ${PRINTER} does not exist"; PRINTER=/dev/null )
+
+echo -n > ${PRINTER}
+# while IFS= read -r line; do
+while read -r line; do
+    printf "%s${EOL}" "${line}" | gawk '{
+        gsub(/\\x1b\\x45/,"\x1b\x45",$0); /* BOLD ON */
+        gsub(/\\x1b\\x46/,"\x1b\x46",$0); /* BOLD OFF */
+        gsub(/\\x1b\\x2d\\x01/,"\x1b\x2d\x01",$0); /* UNDERLINE ON  */
+        gsub(/\\x1b\\x2d\\x00/,"\x1b\x2d\x00",$0); /* UNDERLINE OFF */
+        gsub(/\\x1b/,"\x1b",$0); /* START ESCAPE */
+        gsub(/\\x/,"\x",$0);
+        l = max(1,int(length($0) / 40)) "";
+        l = 1 "";
+        print $0;
+    }' >> ${PRINTER}
+# it is good idea at the end of each line to reset the control codes
+# so they are not carried forward to the next line
+done
+

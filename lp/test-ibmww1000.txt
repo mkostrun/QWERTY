@@ -1,0 +1,53 @@
+\x1bM\x1ba1Test for \x1b\x45QWERTY FIRMWARE 7.2-AIM\x1b\x46
+FOR \x1b\x45IBM/WheelWriter 1000\x1b\x46 : MODE: INV: BEGIN: TYPEWRITER\x1ba0
+
+Installed printwheel: Prestige Elite 12P (Pitch 12)
+Font Pitch Supported:
+\x1bP Pitch 10: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bM Pitch 12: Quick Brown Fox Jumps Over The Lazy Dog [INSTALLED]
+\x1bo Pitch 15: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bp Pitch PS: Quick Brown Fox Jumps Over The Lazy Dog
+\x1bP
+\x1ba1ASCII/Raw Printer
+
+A. Supported EPSON ESC Sequences\x1ba0
+
+1. Font Pitch Change through PITCH SWITCH, or BRUTE FORCE\x1bM
+ESC  P            - Pica, or Pitch 10
+ESC  M            - Elite, or Pitch 12
+ESC 0x0f          - Condensed, or Pitch 15
+ESC  p            - Proportional, Pitch PS\x1bP
+
+2. Vertical or Horizontal Motion\x1bM
+0x08              - Backspace
+0x09              - Horizontal Tab
+ESC  0            - Line space 1
+ESC  1            - Line space 1-1/2
+ESC  2            - Line space 2
+ESC  3            - Line space 3
+ESC  D  0         - Clear Horizontal Tabs
+ESC  D  1         - Set Horizontal Tab Here
+ESC  Q  0xNN      - Set right margin at NN column in hex
+ESC  l  0xMM      - Set left margin at MM column in hex
+\x1bP
+3. Print Enhancement\x1bM
+ESC  -  0         - Cancel Underline
+ESC  -  1         - Start Underline
+ESC  E            - Start Bold
+ESC  F            - Cancel Bold
+\x1bP
+4. Justification\x1bM
+ESC  a  0         - Left
+ESC  a  1         - Center
+ESC  a  2         - Right
+ESC  a  3         - Fake Full (Auto Return)
+\x1bP
+5. Linux Keyboard through Minicom\x1bM
+ARROW /UP,DOWN,LEFT, RIGHT/, TAB, BACKSPACE, DELETE, ENTER
+TILDE             - Required Space (TeX Notation)\x1bP
+
+\x1ba1B. Custom ESC (EPSON non-compliant) Sequences\x1ba0\x1bM
+ESC  i  0         - Clear paragraph indent
+ESC  i  1         - Set paragraph indent here
+ESC  o            - Condensed, Pitch 15
+
