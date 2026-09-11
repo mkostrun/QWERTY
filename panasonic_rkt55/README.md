@@ -235,6 +235,3 @@ Panasonic RK-T55 Typewriter Keyboard Matrix. Note that source (IBM:drive) lines 
 | **D12** | CODE | | | | | | | | | |
 
 PS: I am getting old. I had to use _copilot_ to fix the table formatting, as Keenwrite deemed my original table fine but github did not.
-
-
-P
