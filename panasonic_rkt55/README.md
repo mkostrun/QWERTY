@@ -220,21 +220,33 @@ Panasonic RK-T55 Typewriter Keyboard Matrix. Note that D-lines are numbered by t
 
 
 | **S**	| **0**	| **1**	| **2**	| **3**	| **4**	| **5**	| **6**	| **7**	| **8**	| **9** | 
+
 |:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
 
-
 |**D0** |5V
+
 |**D1**	|w	|s	|x	|z	|a	|q|		|2	|	|1
+
 |**D2**|t	|f	|v	|c	|d	|r	|e	|5	|3	|4
+
 |**D3**|k	|m	|.	|,	|l	|i	|0	|-	|8	|9
+
 |**D4**|SPELL	|	|	|RET	|	||lb|	=|FILE	|	|
+
 |**D5** |GND
+
 |**D6**|AUTO|EXT	|	|	|BOLD	|UNDER	|	|	BS|	SPACE|
+
 |**D7**|g	|b	|SPACE	|n	|j	|h	|u	|y	|6	|7
+
 |**D8**|'	|DEL |DOWN|UP	|/	|;	|1/2|p	|VTAB	|o
+
 |**D9** |LOCK
+
 |**D10** |SHIFT
+
 |**D11**|LINE SP|KBD|||||PITCH|||MODE
+
 |**D12**|CODE
 
 
