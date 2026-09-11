@@ -216,7 +216,7 @@ This blocking mode is necessary if one wants to type more than one symbol over t
 
 to type *mama*. Refer to Typewriter Matrix Table for interpretation of S/D lines to typewriter symbols.
 
-Panasonic RK-T55 Typewriter Keyboard Matrix. Note that D-lines are numbered by their delay, and not by their physical numbering on the connector.
+Panasonic RK-T55 Typewriter Keyboard Matrix. Note that source lines are numbered by their delay, and not by their physical numbering on the connector.
 
 | **S** | **0** | **1** | **2** | **3** | **4** | **5** | **6** | **7** | **8** | **9** |
 |:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|
@@ -233,36 +233,5 @@ Panasonic RK-T55 Typewriter Keyboard Matrix. Note that D-lines are numbered by t
 | **D10** | SHIFT | | | | | | | | | |
 | **D11** | LINE SP | KBD | | | | | PITCH | | | MODE |
 | **D12** | CODE | | | | | | | | | |
-
-
-| **S**	| **0**	| **1**	| **2**	| **3**	| **4**	| **5**	| **6**	| **7**	| **8**	| **9** | 
-
-|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
-
-|**D0** |5V
-
-|**D1**	|w	|s	|x	|z	|a	|q|		|2	|	|1
-
-|**D2**|t	|f	|v	|c	|d	|r	|e	|5	|3	|4
-
-|**D3**|k	|m	|.	|,	|l	|i	|0	|-	|8	|9
-
-|**D4**|SPELL	|	|	|RET	|	||lb|	=|FILE	|	|
-
-|**D5** |GND
-
-|**D6**|AUTO|EXT	|	|	|BOLD	|UNDER	|	|	BS|	SPACE|
-
-|**D7**|g	|b	|SPACE	|n	|j	|h	|u	|y	|6	|7
-
-|**D8**|'	|DEL |DOWN|UP	|/	|;	|1/2|p	|VTAB	|o
-
-|**D9** |LOCK
-
-|**D10** |SHIFT
-
-|**D11**|LINE SP|KBD|||||PITCH|||MODE
-
-|**D12**|CODE
 
 
