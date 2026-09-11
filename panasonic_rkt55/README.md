@@ -1,70 +1,80 @@
 # QWERTY (**Q**uery and **W**hisper to **E**lectronic **R**emote **TY**pewriter)
+# Flavor: Panasonic RK T-55 Typewriter
+
 
 ## Executive Summary
 
-Micro-controller (MC) based solution for emulation of typewriter keyboard matrix is proposed.
-
-In an electronic typewriter, the keyboard matrix consists of two sets of connections to the typewriter motherboard: drive pins and sense pins, where a key on the keyboard makes steady connection between one drive and one sense pin.\
-Novelty in the presented solution is that it uses the earliest of the drive signals in the drive signals set, and from it generates internally delayed drive pulses. These delayed pulses are then provided to different sense pins.\
-Besides emulating the keyboard, the solution allows one to explore the typewriter matrix and find values of the delays for drive pins. 
-This is done through built-in command line interface over serial port.\
-STM32F030 (Arm Cortex M0) is used for realization of the solution, but this is done using generic HAL-infrastructure, so other MC's can be implemented, as well.
-
-## Word of the wise
-
-To successfully complete this project, one will have to learn a lot about 40-year old electronic typewriters.\
-Through synchronicity, this project was initially organized around a Panasonic RK-T55 typewriter, which is similar to other typewriters from RK, or T-series in that the printing element is the, so called, cupwheel:\
-The cupwheel comprise pairs of letters and symbols on plastic bars attached to a gear. A plastic bar carries an elevated relief of the letter covered with thin metal layer. 
-While developing the MC firmware, it was discovered that under hits from the typewriter hammer these letters would first decompose (metal separated from plastic resulting is a messy imprint of a symbol or letter) and then fall of (a piece would break off the plastic bar at the place of hammer impact). 
-After 40 or so years of hibernation (silent aging of the part) when trying to use such a converted typewriter as a printer, one need be prepared that its cupwheel may become unusable after few pages of text. 
-This became apparent on the original cupwheel which came with the typewriter, and was confirmed on the second cupwheel purchased shortly after the first started failing.\
-The main inference, if not conclusion, is that in an electronic typewriter the cupwheel (or likely the typewheel, as well) is a consumable, and that persons using old electronic typewriters as printers better have a supply of cupwheels/typewheels.\
-For that reason, after initial development of firmware different typewriter was chosen for project continuation, namely, IBM Wheelwriter 1000, for which there is abundance of parts cupwheels/typewheels available on the internet, and which has reputation that it was "built like a tank."
-
-Another mechanicists theory that could explain this rapid demise of cupwheels is that a rate of loss of symbols off the well-aged cupwheels is a function of steady typewriting speed.  
+Nucleo 64 - STM32F030 (Arm Cortex M0, 8KB SRAM, 64KB FLASH) 
+development board is used for emulation of keyboard matrix in a Panasonic (PAN) RK T-55 
+typewriter.
+The PC host controls the typewriter through serial over USB, where it can be used either as a standard ASCII printer, or through a terminal program such as minicom it can be used directly as a typewriter.
 
 ## Abstract
-The project addresses one solution to remote control of old Panasonic electronic typewriters,
-which is through keyboard matrix emulation. The keyboard matrix of a Panasonic typewriter RK-T55 is described.
-A solution is presented based on STM32F03-Nucleo64 micro-controller platform, which implements the following functional elements:
-1. PWM, through TIM16, for creating test pulses that emulate base line pulses in the typewriter;
-2. 2 Channel Input Capture, through TIM3, which measures pulse, period and delay between two channels, which with external pull-resistors to 5V can be used for sensing the typewriter S[0:9] channels;
-3. Software timer TIM14, which can be triggered by TIM3/CH2, in one-pulse-like mode. It creates interrupts on delay and period overflow, and the IRQ Handlers in effect create GPIP Multiplexer for the typewriter sense channels.
 
-The micro-controller STM32F03 is command driven through serial port, and command line interface is developed that allows one to control all elements of each functional part.
-In the presented solution, the MC is connected to typewriter through 13 wires (S5 with pull-up, D/F[1:12]), and to the computer through USB-to-serial cable.
-This allows full access to all keyboard keys for typewriting and control of the RK-T55 typewriter.
+The project provides firmware for Nucleo 64 - STM32F030, which with proper wiring to the typewriter sense and drive lines, allow it to control the typewriter PAN RKT-55 keyboard matrix.
+While the QWERTY project addresses how to emulate a keyboard matrix in general terms, this flavor addresses relevant details of implementation:
 
-## 1. On the Shoulders Of
+0. TTL to 3.3V conversion: All tested typewriters use 5V positive logic. STM32 MCU operates at 3.3V.
+    - The typewriter sense lines are driven by STM32 through usage of two output states: Active State at 0V, and Inactive State as Analog Input. This is because in the typewriter, all sense lines have pull-up resistors. 
+    - The typewriter drive line(s) feeding into input capture channels on STM32 MCU may be protected with a signal diode (from STM to TY) and a 3.3V pull-up resistor.
+1.  S-connector (right on the main board) has 13 lines:  S0 is 5V, S5 is 0V, while S1:4 and S6:12 are used for keys (11 lines).  
+2.  D-connector (left on the main board) has 13 lines: D0:7 and D9 for keys, D8 is 0V and D12 is 5V.
+3. The period of drive pulse bursts is $tper = 10.3$ ms (97 Hz), while a pulse length is $tpul = 83$ us (12 kHz). 
+4. The drive pulses relative delays in units of $tpul$ are: D0/0, D1/1, D2/-1, D3/-2, D4/-3, D5/-9, D6/-5, D7/-4, D9/-7. Upon pressing a key, the drive pulse is unmodified. Thus, the firmware uses D5 line for input capture, and from it computes the timings of the other 8 drive pulses. D5 through interrupt on leading edge drives the multiplexer for sense lines (from the leading edge, the firmware computes start and end of the drive pulse, and dumps it on the sense line for the key that was pressed).
+5. The sense lines are split into two groups: (true) sense lines S1:4 and S6:9, and fixed (sense) lines S10:12. Fixed lines correspond to the keys LOCK, SHIFT and CODE. The firmware emulates drive pulses to sense lines through multiplexing, while synchronously activating and inactivating the fixed lines.
+6. To get a key registered by the typewriter, the minimum number of pulses is 4 periods. Between two consecutive keys there has to be 6 period blank. This is consistent with the 9 characters per second (CPS) speed of the typewriter. 
 
-There is considerable amount of work posted on how to connect the electronic typewriters from the period 1980-90's to modern computers.
-Most of the work aims at reverse engineering the communication protocol of various serial-look alike protocols using inexpensive micro-controller prototyping boards.
-Two of the projects listed below, however, 
-recognized the presence of keyboard matrix inside the typewriter,
-provided rudimentary signal plots of various drive lines:
-- McChristy created a massive micro-controller controlled analog switching matrix through multi-channel multiplexer/demultiplexer integrated circuits. Obviously, such a solution required additional electronic components, specialized printed circuit boards, and extensive wiring.
--  On the other hand, Chataignon used Arduino input and output pins to emulate typewriter matrix through bit-banging. For predefined duration of time, Arduino sits on one [Drive] pin and transfer all activity to another [Sense] pin.
+Firmware through various MACROS allow configuration of delays, and sense and fixed lines. Firmware requires D5 to be to specific pin (TIM3/CH1 Input Capture, with pulse edge generated interrupts for measuring the pulse duration, and period, and reporting it to the user when firmware is operating in CLI mode).
 
-The work presented here may be considered an evolution of these two approaches.
+## Supported EPSON Printer Codes
+Native font pitch: 10
 
-Sources, all retrived in March, 2026, relevant for this project are:
-1. [McChristy](https://mrchristyengineering.wordpress.com/2024/12/09/hello-world/)  (n.d.)
-2. [Alexandre Chataignon, Typewriter Arduino project](https://github.com/xouillet/TypeWriter) (n.d.)
-3. [Troy Deck,  Reverse engineering the Panasonic Thermalwriter Computer Interface](https://github.com/tdeck/thermalwriter-interface) (n.d.) pages on reverse engineering a communication protocol between Panasonic parallel interface box and the typewriter.
-4. [stackexchange](https://retrocomputing.stackexchange.com/questions/13385/panasonic-kx-w50th-data-transfer/13510) lament on data transfer protocol. 
+1.  Font Pitch:
+     - ESC  P            - Pica, or Pitch 10
+     - ESC  M            - Elite, or Pitch 12
+     - ESC 0x0f          - Condensed, or Pitch 15
+     - ESC  p            - Proportional, Pitch PS
+2. Vertical or Horizontal Motion
+    - 0x08              - Backspace
+    - 0x09              - Horizontal Tab
+    - ESC  0            - Line space 1
+    - ESC  1            - Line space 1-1/2
+    - ESC  2            - Line space 2
+    - ESC  D  0         - Clear Horizontal Tabs
+    - ESC  D  1         - Set Horizontal Tab Here
+    - ESC  Q  0xNN      - Set right margin at NN column in hex
+    - ESC  l  0xMM      - Set left margin at MM column in hex
+3. Print Enhancement
+    - ESC  -  0         - Cancel Underline
+    - ESC  -  1         - Start Underline
+    - ESC  E            - Start Bold
+    - ESC  F            - Cancel Bold
+ 4. Justification
+    - ESC  a  0         - Left
+    - ESC  a  1         - Center
+    - ESC  a  2         - Right
+    - ESC  a  3         - Full
+5. Custom ESC (EPSON non-compliant) Sequences
+    - ESC  i  0         - Clear paragraph indent
+    - ESC  i  1         - Set paragraph indent here
 
-Useful is service manual of another Panasonic thermal typewriter, which gives an idea of how many and what kind of signals to expect between drive and sense channels in their **keyboard matrix.**
+I am being lazy here, but for IBM WW1000, there is also support for keyboard keys ARROWS (UP, DOWN, LEFT, RIGHT), BACKSPACE, DELETE, and it uses tilde(~) for, in IBM parlance, required space (tilde is obviously TeX notation). Check _main.c_ between two flavors, and how ESC codes are processed.
 
-## 2. Introduction
+## 2. TLDR;
+
+As this was done before I worked on IBM WW1000, the pin designation below and in the source code was exactly oposite: 
+- me  at that time: Source Pins and Drain Pins
+- IBM: Source -> Drive Pins and Drain -> Sense Pins. Ahhh. Too lazy to go back and change PAN firmware with updated notation.
+- Smith-Corona and Panasonic seem to use terms 'row pins' and 'column pins,' which, to my opinion, obfuscate their functional role.
+
+### 2.0 I wondered lonely as a cloud, when all at once ...
 
 Through actions of *The Big Random Number Generator in The Sky*, a typewriter Panasonic RK-T55 landed in the author's lap.
 
 ### 2.1 Keyboard access
 
-Through keyboard, one has full access to the typewriter's features.
-E.g., one can access various font pitch sizes (10, 12, 15, PS), 
-and change line spacing to 1, 1 1/2 or 2.
-One can also set/change margins, vertical and horizontal tabs, move around the paper (UP, DOWN, LEFT, RIGHT), or execute Micro-motion.
+Through keyboard, one has full access to the typewriter's features including
+font pitch (10, 12, 15, PS),  line spacing to 1, 1 1/2 or 2, and justification (left, full, right, center).
 
 ### 2.2 Parallel Interface
 
@@ -111,7 +121,7 @@ Instead, we choose an appropriate pre-scaler (20 for STM32F030 operating at 48MH
 The delay achieved in this fashion was around 8 us, and could not be further reduced (corresponds to timing of interrupts and triggers between `TIM3/CH2` input trigger, and interrupts on TIM14
 that drove the GPIO multiplexer).
 
-## 3. Firmware Realization
+## 4. Firmware Realization
 
 The author chose the micro-controller STM32F03 for no particular reason, except that there was one hiding in the box of stuff. 
 An ARM M0 seems like appropriate micro-controller for this project as it has enough memory (68K) and speed (48MHz).
@@ -135,7 +145,7 @@ ONLY IN THIS CONFIGURATION CAN THE TYPEWRITER KEYBOARD AND MCU KEYBOARD EMULATOR
 
 Firmware functions are described next, together with the CLI commands to control them.
 
-### 3.1 PWM
+### 4.1 PWM
 
 TIM16 is used for creation of  PWM pulses for the purpose of providing test input for the other functions in the firmware. The timer is chosen because the pin on which the pulses are created is conveniently located at Arduino pin D15/PB8.
 
@@ -162,7 +172,7 @@ Command line interface:\
 `pwm:period?` 	query the active PWM period length;\
 `pwm:update`	if values have been changed using the commands above, then this is needed to upload the updated values and restart  the PWM generator.
 
-### 3.2 Input Capture
+### 4.2 Input Capture
 
 In the development of the firmware TIM3 was used for this function from the beginning. 
 What varied during the development was which channels were used.
@@ -180,7 +190,7 @@ An oscilloscope with its clamps provides better connection than futzing with the
 E.g., through this method we find for the Panasonic RK-T55 values of the pulse of 200, and period a random number in the range of 24665 to 24681.
 Luckily, for this project we source these signals from the typewriter PCB.
 
-### 3.3 Typing through CLI
+### 4.3 Typing through CLI
 
 There are two commands that are available for typing, 
 
@@ -206,25 +216,22 @@ This blocking mode is necessary if one wants to type more than one symbol over t
 
 to type *mama*. Refer to Typewriter Matrix Table for interpretation of S/D lines to typewriter symbols.
 
-Panasonic RK-T55 Typewriter Keyboard Matrix
+Panasonic RK-T55 Typewriter Keyboard Matrix. Note that D-lines are numbered by their delay, and not by their physical numbering on the connector.
 
 |**S**	|**0**	|**1**	|**2**	|**3**	|**4**	|**5**	|**6**	|**7**	|**8**	|**9**
 | :-:|
-|**F0** |5V
+|**D0** |5V
 |**D1**	|w	|s	|x	|z	|a	|q|		|2	|	|1
 |**D2**|t	|f	|v	|c	|d	|r	|e	|5	|3	|4
 |**D3**|k	|m	|.	|,	|l	|i	|0	|-	|8	|9
 |**D4**|SPELL	|	|	|RET	|	||lb|	=|FILE	|	|
-|**F5** |GND
+|**D5** |GND
 |**D6**|AUTO|EXT	|	|	|BOLD	|UNDER	|	|	BS|	SPACE|
 |**D7**|g	|b	|SPACE	|n	|j	|h	|u	|y	|6	|7
 |**D8**|'	|DEL |DOWN|UP	|/	|;	|1/2|p	|VTAB	|o
-|**F9** |LOCK
-|**F10** |SHIFT
+|**D9** |LOCK
+|**D10** |SHIFT
 |**D11**|LINE SP|KBD|||||PITCH|||MODE
-|**F12**|CODE
+|**D12**|CODE
 
 
-### 3.4 Production Firmware
-
-In final version, fully customized to the typewriter, one would ditch PWM, and IC, and just trigger TIM14 using the baseline pulses from the typewriter. 
