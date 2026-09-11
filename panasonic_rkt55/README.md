@@ -216,7 +216,7 @@ This blocking mode is necessary if one wants to type more than one symbol over t
 
 to type *mama*. Refer to Typewriter Matrix Table for interpretation of S/D lines to typewriter symbols.
 
-Panasonic RK-T55 Typewriter Keyboard Matrix. Note that source lines are numbered by their delay, and not by their physical numbering on the connector.
+Panasonic RK-T55 Typewriter Keyboard Matrix. Note that source (IBM:drive) lines are numbered by their delay, and not by their physical numbering on the connector.
 
 | **S** | **0** | **1** | **2** | **3** | **4** | **5** | **6** | **7** | **8** | **9** |
 |:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|
@@ -234,4 +234,7 @@ Panasonic RK-T55 Typewriter Keyboard Matrix. Note that source lines are numbered
 | **D11** | LINE SP | KBD | | | | | PITCH | | | MODE |
 | **D12** | CODE | | | | | | | | | |
 
+PS: I am getting old. I had to use _copilot_ to fix the table formatting, as Keenwrite deemed my original table fine but github did not.
 
+
+P
