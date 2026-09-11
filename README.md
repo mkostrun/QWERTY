@@ -25,22 +25,24 @@ configuration parameters that allows it with proper wiring to control, we believ
 any electronic typewriter of the era (Smith Corona, or Olympia, to mention a few).
 
 -----
-(*) Quirky here refers to a feature of STM32 USB programming interface stlink: On Linux to reset the MCU and start  executing its firmware, one needs to send BREAK command to the serial port upon opening it (Minicom: ALT+A,F sequence). This allows typewriter to be simultaneously controlled through printer driver, minicom, and typewriter keyboard.
+(*) Quirky here refers to a feature of STM32 USB programming interface stlink: On Linux to reset the MCU and start  executing its firmware, one needs to send BREAK command to the serial port upon opening it (Minicom: ALT+A,Z,F sequence). This allows typewriter to be simultaneously controlled through printer driver, minicom, and typewriter keyboard.
 
 ## Technical Abstract
 
 A firmware for keyboard matrix emulator based on STM32F03-Nucleo64 micro-controller platform, is presented. The firmware implements the following functional elements:
+1. TTL to 3.3V conversion: All tested typewriters use 5V positive logic. STM32 MCU operates at 3.3V.
+    - The typewriter sense lines are driven by STM32 through usage of two output states: Active State at 0V, and Inactive State as Analog Input. This is because in the typewriter, all sense lines have pull-up resistors. 
+    - The typewriter drive line(s) feeding into input capture channels on STM32 MCU may be protected with a signal diode (from STM to TY) and a 3.3V pull-up resistor.
+
 1. Typewriter drive signal detection and reconstruction: 1 or 2 Channel Input Capture, through TIM3, which uses interrupt service routine (IRS) to detect the leading and trailing edges of one or two drive lines:
 	- PAN/RKT55 uses 1 input capture channel connected to single drive line from the typewriter, which triggers on leading edge interrupts. As the typewriter utilizes fixed sense lines for keys SHIFT, CODE,  and CAPS LOCK, the firmware provides two fixed lines too;
 	- IBM/WW1000 uses two input capture channels and trailing edge interrupts. The typewriter utilizes single and two simultaneous pulsed drive lines, where the length of the pulses is altered so to compensate for debouncing of the keys. For that reason the firmware uses as input the drive lines for keys SHIFT and CODE, and from them computes how to drive sense channels for other keys. In adition, for brave in heart, third input channel is available through GPIO/EXTI should one decide to use "PITCH SWITCH" hack.  The hack allows WW 1000 limited control through software of the font pitch, similar to what, e.g., IBM ActionWriter 1, has.
 
-	The channels for input capture may be protected with a signal diode and a 3.3V pull-up resistor: all typewriters use 5V logic, while STM32 uses 3.3V.
-
-2. Software timer TIM14 which, through interrupts on delay and on period overflow, creates output signals on selected sense pins. It appears that all typewriters of the era used 5V positive logic. With contemporary MCU operating on 3.3V the sense lines were driven through usage of two output states: Active State at 0V, and Inactive State as Analog Output (all sense lines feature pull-up resistors). MCU input lines were 5V protected through diode with 3.3V pull-up resistor.
+2. Software timer TIM14 which, through interrupts on delay and on period overflow, creates output signals on selected sense pins, and so acts as a GPIO multiplexer. 
 3. Command Line Interface (CLI) through Serial Port: the firmware runs in two modes, as CLI, where there is a small set of commands that can be used to probe the typewriter or type a symbol, and as TYPEWRITER, where all received data is typed on the typewriter. The latter recognizes some EPSON compatible escape sequences. The serial port uses interrupts to send messages, and DMA RX to receive messages.
 
 
-STM32F030 (Arm Cortex M0, 8KB SRAM, 64KB FLASH) is used for realization of the solution, but this is done using generic HAL-infrastructure, so other MC's can be implemented, as well. It uses 4KB DMA RX buffer for serial port input, and 512 symbol output buffer for sending symbols to a typewriter.
+STM32F030 (Arm Cortex M0, 8KB SRAM, 64KB FLASH) is used for realization of the solution, but this is done using generic HAL-infrastructure, so other MC's can be implemented, as well. It uses 4KB DMA RX buffer for serial port input, and 512 symbol output buffer for sending symbols to the typewriter.
 
 
 
@@ -48,39 +50,38 @@ STM32F030 (Arm Cortex M0, 8KB SRAM, 64KB FLASH) is used for realization of the s
 
 To successfully complete this project, one will have to learn a lot about 40-year old electronic typewriters.
 
-Hardware work involves isolating drive and sense connectors, using an oscilloscope to identify drive lines used for input capture, and soldering all wires to the sense connector, and one-two wires to the driver connector. 
+Hardware work involves isolating drive and sense connectors, using an oscilloscope to identify drive lines used for input capture, and soldering all wires to the sense connector, and one-two wires to the driver connector. Additional wiring is needed for built-in switches, which also require separation switch.
 
 Software work involves identifying pins attached to drive and to sense and fixed lines, and examining PAN firmware on how to handle fixed lines, and IBM firmware on how to handle simultaneous driving of two sense inputs.
 
-The selection of typewriter to work on, is critical. The typewriters that require minimal work are those where the various formating features are available as keyboard strokes. For IBM typewriters, that is definitely, the ActionWriter 1, as it does not require PITCH SWITCH hack. 
+Choosing a typewriter is critical. One should look for those in which the various formating features are available as keyboard strokes. For IBM that is definitely the ActionWriter 1. Wait, this one IBM outsourced to, used to be West, German Adler.
 For PAN these are KT-R30 or 55, and perhaps KX-E508. Olympia de Luxe seems to be fine candidate too.
-If typewriter has additional switches (e.g., font pitch selector in PAN KX-R typewriters), these significantly complicate the wiring: One first needs a separation switch to disconnect the switch from the typewriter, and then number of fixed lines that control the switch output. E.g., if typewriter has a 1-in-3 selector for 10, 12 and 15pt font pitch, this requires three fixed lines from the MCU connected to font pitch sense lines, and a manual switch to disconnect typewriter font pitch switch from 0V.
+If typewriter has additional built-in switches (e.g., font pitch selector in PAN KX-R typewriters), these complicate the wiring: One first needs to install a separation switch to disconnect the built-in switch(es) from the typewriter, and then bring from MCU a number of fixed lines that control the switch output. E.g., if typewriter has a 1-in-3 selector for 10, 12 and 15pt font pitch, this requires three fixed lines from the MCU connected to font pitch sense lines. 
+- What makes things easier is that all built-in switches can be controlled through single separation switch that connects/disconnects them to 0V.
+- What makes things harder, is that prior to activation of separation switch, the MCU lines have to be inactive. This suggests that the MCU may have to control the separation switch in non-trivial way: if the MCU is off the built-in switches drive line has to be pulled to 0V, while if the MCU is controlling the typewriter the drive line has to be disconnected or inactive.
 
 Some of the important keyboard-accessible features to consider when choosing a typewriter for conversion, 
 are:
 - text justification: left, full, center, right margin flush-RMF; 
 - font pitch: 10, 12, and 15, and proportional spacing (PS); 
-- keyboard characters '<' , '>', '|', '~'
+- new keyboard characters '<' , '>', '|', '~'
 - typing speed (characters per second, CPS). One should be warned that typing in full justification is painfully slow (input from keyboard is transferred to typewriter internal memory, and from there printed margin to margin, on Panasonic the speed of this is some 4 CPS);
 - micro 1- or 4-directional spacing: this can be used for brute-force PITCH SWITCH: IBM WW 1000 has 1-directional micro (back) space equal in size to 1/5 font pitch. With 12pt native printwheel, 15pt font pitch can be simulated through pressing back space after single character, which works OK in regards to typing speed.  To get 10pt, one would press space after each character followed by 4 back spaces. To watch WW 1000 do this drunken dance could be very painful.
 - we found no typewriters which printout is bi-directional, irrespectively what their advertisement says;
-- availability of replacement parts (printwheels/cupwheels) and consumables (ribbon and correction tape).
-
-
-In developing QWERTY,  PAN RK-T55 typewriter was used the most. This exposed its weakness. PAN RK, or T-series uses as a printing element, so called, cupwheel:\
+- availability of replacement parts (printwheels/cupwheels) and consumables (ribbon and correction tape):\
+In developing QWERTY,  PAN RK-T55 typewriter was used the most. This exposed its weakness. PAN RK, or T-series uses as a printing element, so called, cupwheel: 
 The cupwheel comprise pairs of letters and symbols on plastic bars attached to a round gear. A plastic bar carries an elevated relief of the letter covered with thin metal layer. 
 During testing it was noticed that under hits from the typewriter hammer these letters would first decompose (metal separated from plastic resulting is a messy imprint of a symbol or letter) and then fall of (a piece would break off the plastic bar at the place of hammer impact). 
-For this project a total of three PAN typewriters with cupwheels were obtained from e-Bay, where the typewriters ended in land fill somewhere. 
+This project consumed a total of three PAN typewriters with cupwheels, which were obtained from e-Bay. The typewriters ended up, or perhaps down, in the land fill somewhere, their cupwheels too.
 
 ## Next steps
 
 1. Extending the QWERTY firmware with sub-variants for other electronic typewriters of the era may be interesting. 
-One detriment, though, is the typing speed. 
-Besides IBM at around 20 CPS, all the other examined typewriters have around 12 CPS speed, at least for
-consumer level typewriters (Smith Corona, or Olympia).
+Some detriments are their typing speed and keyboard control.
+Besides IBM at around 20 CPS, all the other examined typewriters have around 12 CPS speed, at least for consumer level typewriters (Smith Corona, or Olympia).
 2. Replacing soldering of sense wires with ribbon cable connector might be interesting to streamline conversion.
 3. Simulating a human operator of a typewriter: 
-    - Through QWERTY, 'DELETE' key is accessible with all arrow keys. If the typewriter has correction tape installed, this deletes the typed character under the hammer. To prove that a certain document was written on a typewriter by a human, a random number of errors and their corrections could be inserted in the document as it is being printed. Actions that can be simulated are crossing a word out with x's, deleting a character and correcting it, or deleting an entire word then typing a corrected word in the available space using micro-spacing;
+    - Through QWERTY, 'DELETE' key is accessible with all arrow keys. If the typewriter has correction tape installed, this deletes the typed character under the hammer. To prove that a certain document was written on a typewriter by a human, a random number of errors and their corrections could be inserted in the document as it is being printed. Actions that can be simulated are deleting a character and correcting it, or deleting an entire word then typing a corrected word in the available space using micro-spacing. Interestingly, the typewriters do not allow crossing out a mistyped word by x's. I didn't have time to figure out how to override.
     - Time delays between keys can be inserted, so to mimic a human operator of various typing skills sitting behind a closed door.
 
 ## References
