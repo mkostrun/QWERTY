@@ -218,6 +218,7 @@ to type *mama*. Refer to Typewriter Matrix Table for interpretation of S/D lines
 
 Panasonic RK-T55 Typewriter Keyboard Matrix. Note that D-lines are numbered by their delay, and not by their physical numbering on the connector.
 
+--
 
 | **S**	| **0**	| **1**	| **2**	| **3**	| **4**	| **5**	| **6**	| **7**	| **8**	| **9** | 
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
