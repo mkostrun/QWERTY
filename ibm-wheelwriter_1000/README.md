@@ -43,16 +43,16 @@ Basically, for a single pitch font size printer wheel (say 12), by changing the 
 
 1. BRUTE FORCE
 
-IBM WW 1000 keyboard features a key *Bksp 1* (CODE + Back Space), which returns the printer carriage by 1/5 of the space spacing. If the native font pitch is 12p, then by pressing *Bksp 1* after every key, one achives $12 + 12/5 = 14.2 \approx 15$  character placements per 2.54cm. Easy, right? One only suffers drop in CPS from 20 to 10 (comparable to PAN and others of 12 CPS nominal).
+   IBM WW 1000 keyboard features a key *Bksp 1* (CODE + Back Space), which returns the printer carriage by 1/5 of the space spacing. If the native font pitch is 12p, then by pressing *Bksp 1* after every key, one achives $12 + 12/5 = 14.2 \approx 15$  character placements per 2.54cm. Easy, right? One only suffers drop in CPS from 20 to 10 (comparable to PAN and others of 12 CPS nominal).
 
-To get 10p through this method one would need micro-space, but the IBM keyboard does not provide it. Hmm, I wonder why. 
+   To get 10p through this method one would need micro-space, but the IBM keyboard does not provide it. Hmm, I wonder why.
 
-One method for producing +1/5 space is to send SPACE follower by four *Bksp 1* keys after each character. While that achieves the goal of typing $12 - 12/5 = 9.8 \approx 10$ characters per 2.54cm.
-Watching typewriter go through these steps to print with this pitch is painful. 
+   One method for producing +1/5 space is to send SPACE follower by four *Bksp 1* keys after each character. While that achieves the goal of typing $12 - 12/5 = 9.8 \approx 10$ characters per 2.54cm.
+Watching typewriter go through these steps to print with this pitch is painful.
 
-Also, it seems like it would void the warranty and shorten the life expectancy of the printer head.
+   Also, it seems like it would void the warranty and shorten the life expectancy of the printer head.
 
-For those reasons, a better solution is suggested ....
+   For those reasons, a better solution is suggested ....
 
 2. HAX
 
@@ -62,9 +62,9 @@ For those reasons, a better solution is suggested ....
    
    For the purpose of this project, the holes on the printwheel were masked, and typewriter induced to recalibrate the printwheel. The signal was read from Line/Pin 20 and recorded for each of the simulated pitches (Did you know if you cover appropriate hole your printerwheel, the logic will think it has that pitch font on it?). This was the second thing we tried. The first was that it was noticed there exist commands that cause the logic to spin the printerwheel in particular way, where it was easy to identify from which hole particular pulse came. This turned out not to work. The only way to force the typewriter to consider switching the font pitch is to stimulate the logic through Line/Pin 20 by two long pulses, which correspond to a person taking out the printwheel and replacing it by another, followed by calibration the printer head performs after the printwheel change. This procedure at the shortest takes some 2 seconds.
 
-   In the folder **ai** is the conversation with Claude on feasibility of doing it prior to me trying to do it. Talking about **botshit*, I mean, *hallucinations*!.
+   In the folder **ai** is the conversation with Claude on feasibility of doing it prior to me trying to do it. Talking about **botshit**, I mean, *hallucinations* !
 
-   In theory this could be improved: one would first replay the messages that induce typewriter to think it has new printwheel inserted with target pitch. Secondly, when the typewriter goes into *i-am-lost-frenzy* and starts to spin printwheel like a maniac, one would need to detect the direction of spin, and then blank the bits in it that correspond to the appropriate holes on the printwheel.
+   In theory this could be improved: one would first replay the messages that induce typewriter to think it has new printwheel inserted with target pitch. Secondly, when the typewriter goes into *i-am-lost* frenzy and starts to spin the printwheel like a maniac, one would need to detect the direction of spin, and then blank the bits in it that correspond to the appropriate holes on the printwheel.
 
    For this project we found what works in most of the cases is that replaying messages works for switching pitch, followed by subsequent pass-through behavior (even though pass-through reveals that the printwheel is 12p, and not something else).
 
