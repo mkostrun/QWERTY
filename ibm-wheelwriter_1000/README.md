@@ -1,8 +1,9 @@
 # QWERTY (**Q**uery and **W**hisper to **E**lectronic **R**emote **TY**pewriter)
 
-<p align="center"><img width="1000" src="/ibm-wheelwriter_1000/art/2026-07-17-IBM-WW1000-Demo-All_Features-scanned_copy.png" alt="description" /></p>
-
 # Flavor: IBM WheelWriter 1000 Typewriter
+
+<p align="center"><img width="800" src="/ibm-wheelwriter_1000/art/2026-07-17-IBM-WW1000-Demo-All_Features-scanned_copy.png" alt="description" /></p>
+
 
 ## Executive Summary
 Nucleo 64 - STM32F030 (Arm Cortex M0, 8KB SRAM, 64KB FLASH) 
