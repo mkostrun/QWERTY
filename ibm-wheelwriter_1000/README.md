@@ -43,11 +43,14 @@ Basically, for a single pitch font size printer wheel (say 12), by changing the 
 
 1. BRUTE FORCE
 
-IBM WW 1000 keyboard features a key *Bksp 1* (CODE + Back Space), which returns the printer carriage by 1/5 of the space spacing. If the native font pitch is 12p, then by pressing *Bksp 1* after every key, one achives $12 + 12/5 = 14.2 \approx 15$  character placements per 2.54cm (that would be an inch). Easy, right? One only suffers drop in CPS from 20 to 10 (comparable to PAN and others of 12 CPS nominal).
+IBM WW 1000 keyboard features a key *Bksp 1* (CODE + Back Space), which returns the printer carriage by 1/5 of the space spacing. If the native font pitch is 12p, then by pressing *Bksp 1* after every key, one achives $12 + 12/5 = 14.2 \approx 15$  character placements per 2.54cm. Easy, right? One only suffers drop in CPS from 20 to 10 (comparable to PAN and others of 12 CPS nominal).
 
 To get 10p through this method one would need micro-space, but the IBM keyboard does not provide it. Hmm, I wonder why. 
-One method for producing +1/5 space is to send SPACE follower by four *Bksp 1* keys after each character. While that achieves the goal of typing $12 - 12/5 = 9.8 \approx 10$ characters per 2.54cm, 
-Watching typewriter go through these steps to print with this pitch is painful, slow, and it seems like it would void the warranty and shorten the life expectancy of the printer head.
+
+One method for producing +1/5 space is to send SPACE follower by four *Bksp 1* keys after each character. While that achieves the goal of typing $12 - 12/5 = 9.8 \approx 10$ characters per 2.54cm.
+Watching typewriter go through these steps to print with this pitch is painful. 
+
+Also, it seems like it would void the warranty and shorten the life expectancy of the printer head.
 
 For those reasons, a better solution is suggested ....
 
