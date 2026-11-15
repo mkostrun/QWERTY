@@ -19,6 +19,8 @@ allows it to control the typewriter IBM WW 1000 keyboard matrix.
 In addition, additional PITCH SWITCH  wiring modification is presented, which allows the firmware to partially control the font pitch of
 the typewriter (10p, 12p, 15p and PS).
 
+<p align="center"><img width="700" src="/ibm-wheelwriter_1000/art/2026-07-17-IBM-WW1000-QWERTY-v1-0.png" alt="description" /></p>
+
 While the QWERTY project addresses how to emulate a keyboard matrix in general terms, this flavor addresses relevant details of implementation:
 
 0. TTL to 3.3V conversion: All tested typewriters use 5V positive logic. STM32 MCU operates at 3.3V.
