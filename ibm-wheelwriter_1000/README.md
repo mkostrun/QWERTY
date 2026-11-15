@@ -69,6 +69,8 @@ Watching typewriter go through these steps to print with this pitch is painful.
    
    For the purpose of this project, the holes on the printwheel were masked, and typewriter induced to recalibrate the printwheel. The signal was read from Line/Pin 20 and recorded for each of the simulated pitches (Did you know if you cover appropriate hole your printerwheel, the logic will think it has that pitch font on it?). This was the second thing we tried. The first was that it was noticed there exist commands that cause the logic to spin the printerwheel in particular way, where it was easy to identify from which hole particular pulse came. This turned out not to work. The only way to force the typewriter to consider switching the font pitch is to stimulate the logic through Line/Pin 20 by two long pulses, which correspond to a person taking out the printwheel and replacing it by another, followed by calibration the printer head performs after the printwheel change. This procedure at the shortest takes some 2 seconds.
 
+   <p align="center"><img width="700" src="/ibm-wheelwriter_1000/art/2026-07-17-IBM-WW1000-Demo-Pitch_Switch-scanned_copy.png" alt="description" /></p>
+
    In the folder **ai** is the conversation with Claude on feasibility of doing it prior to me trying to do it. Talking about **botshit**, I mean, *hallucinations* !
 
    In theory this could be improved: one would first replay the messages that induce typewriter to think it has new printwheel inserted with target pitch. Secondly, when the typewriter goes into *i-am-lost* frenzy and starts to spin the printwheel like a maniac, one would need to detect the direction of spin, and then blank the bits in it that correspond to the appropriate holes on the printwheel.
