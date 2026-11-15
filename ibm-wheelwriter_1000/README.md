@@ -260,9 +260,9 @@ Fragments of IBM WW1000 Typewriter Keyboard Matrix. It is slightly different fro
 |:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|
 | **S0** | Tab CLR | | | | | | g| h| | | ' | ENTER | DOWN |  |
 | **S1** |  | Tab SET |  | a | s | d | f| j | k| l | ; | Find | Reloc |  |
-| **S2** | Format | Mar Rel |  | $+/-$ |  |  | 5 | 6 | = |  | BS |  | Ppr Up |  |
-| **S3** | Store |  | . | 1 | 2 | 3 | 4 | 7 | 8 | 9 | 0 | Home |  |  |
-| **S4** | Left Mar | TAB| | q | w| e| r | u| i | o | p | End | Ppr Down |  |
-| **S5** | Play | R Mar| | | | | t| y| [| | $\frac14$ |  |  |  |
+| **S2** |  | Mar Rel |  | $+/-$ |  |  | 5 | 6 | = |  | BS |  | Ppr Up |  |
+| **S3** |  |  | . | 1 | 2 | 3 | 4 | 7 | 8 | 9 | 0 |  |  |  |
+| **S4** | Left Mar | TAB| | q | w| e| r | u| i | o | p |  | Ppr Down |  |
+| **S5** |  | R Mar| | | | | t| y| [| | $\frac14$ |  |  |  |
 | **S6** |  | LOCK | R Shift| z| x | c | v| m | ,| . | $()^2$ | UP |  |  |
 | **S7** | SPACE | DEL | L Shift | $\S$ |  |  | b | n | 6 | 7 | / | LEFT | RIGHT | CODE |
