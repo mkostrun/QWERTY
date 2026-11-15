@@ -40,6 +40,8 @@ Firmware through various MACROS allow configuration of delays, and sense and fix
 
 ## Pitch Switch
 
+<p align="center"><img width="700" src="/ibm-wheelwriter_1000/art/2026-07-17-IBM-WW1000-Pitch_Switch-v1-0.png" alt="description" /></p>
+
 For this project we looked into possibility of changing the pitch of the font without changing the printer wheel. The feature exists in PAN RK-T55 through keyboard, and an IBM typewriter ActionWriter 1 also supports it.
 
 Basically, for a single pitch font size printer wheel (say 12), by changing the amount of spacing between typed symbols one can simulate pitches 10, 12, and 15. With QWERTY firmware, there are two ways of doing it:
