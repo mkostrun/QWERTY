@@ -63,6 +63,8 @@ Watching typewriter go through these steps to print with this pitch is painful.
 
 2. HAX
 
+<p align="center"><img width="700" src="/ibm-wheelwriter_1000/art/2026-07-17-IBM_WW-Printwheel-Service_manual-p1_10.png" alt="description" /></p>
+
    There exist ribbon cable that connects printer head to the typewriter logic. Line/Pin 20 on that cable carries one-way signal on a pull-up line from the head to the logic. PITCH SWITCH intercepts that signal, and by default provides pass-through feature: When the firmware is running, it transfers the state changes from the head to the logic.
    
    PITCH SWITCH function is realized when, upon the input from computer, the firmware replays an electric signal that simulates replacing the print wheel and its subsequent recalibration as 10p, 12p, 15p, or PS pitch printer wheel. It works mostly OK. Sometimes it fails spectacularly in that typewriter loses a feeling which key is being typed. The failures exclusively happen when pitch is changed, and then centering of the text or right-flush-margin (RFM) is attempted.
